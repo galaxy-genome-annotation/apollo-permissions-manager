@@ -51,6 +51,7 @@
   "scripts": {
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
+    "deploy": "webpack; rm -rf dist; mkdir -p dist; cp -Rv build dist/; cp -Rv partials dist/; cp index.html dist; gh-pages -d dist;",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "TAMU-CPT",
