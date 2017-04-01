@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" ng-app="apolloPermissions">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Permission Management Site for Apollo</title>
+
+    <link rel="stylesheet" type="text/css" href="build/main.css"/>
+</head>
+<body>
+    <div ng-controller="NavCtrl" layout="column" style="height:500px" ng-cloak>
+        <md-toolbar ng-cloak>
+            <div class="md-toolbar-tools">
+                <h2>
+                    <span class="md-title"><a href="#/">Permission Management Site for Apollo</a></span>
+                </h2>
+                <span flex></span>
+                <span ng-if="nav.userData.username">
+                    Connected to <code>{{ nav.userData.apollo_url }}</code>
+                </span>
+                <md-menu md-position-mode="target-right target" md-offset="0 55" ng-if="nav.userData.username">
+                    <md-button aria-label="Open user menu" class="md-icon-button" ng-click="$mdOpenMenu($event)" style="padding:0" layout="row" layout-align="center center">
+                        <img md-menu-origin gravatar-src="nav.userData.email" style="width:100%; border-radius: 50%">
+                    </md-button>
+                    <md-menu-content width="2">
+                        <md-menu-item>
+                            <md-button ng-click="go('/logout')">
+                                <span md-menu-align-target>Logout</span>
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+                <md-button aria-label="Login" ng-if="!nav.userData.username" ng-hide="nav.show_login_button == false" ng-click="go('/login')" class="md-secondary">
+                    Login
+                </md-button>
+            </div>
+        </md-toolbar>
+        <div class="view-container">
+            <div ng-view class="view-frame"></div>
+        </div>
+    </div>
+    <script type="text/javascript" src="build/app.js" charset="utf-8"></script>
+</body>
+</html>
