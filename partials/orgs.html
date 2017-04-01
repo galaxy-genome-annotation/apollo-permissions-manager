@@ -1,0 +1,39 @@
+<md-content class="md-padding">
+    <md-table-container>
+        <table md-table md-progress="dataLoadingOrg">
+           <thead md-head md-order="myOrder3">
+              <tr md-row>
+                 <th md-column md-order-by="id">ID</th>
+                 <th md-column md-order-by="genus">Genus/Species</th>
+                 <th md-column md-order-by="commonName">Common Name</th>
+                 <th md-column md-order-by="public">Public</th>
+                 <th md-column>Access</th>
+              </tr>
+           </thead>
+           <tbody md-body>
+              <tr md-row ng-repeat="org in organisms | orderBy: myOrder3">
+                 <td md-cell>{{org.id}}</td>
+                 <td md-cell><i>{{org.genus}} {{org.species}}</i></td>
+                 <td md-cell>{{ org.commonName }}</td>
+                 <td md-cell>{{ org.public }}</td>
+                 <td md-cell>
+                     <table>
+                         <thead>
+                             <tr>
+                                 <th>User</th>
+                                 <th>Permissions</th>
+                             </tr>
+                         </thead>
+                         <tbody>
+                             <tr ng-repeat="user in users" ng-if="user.role == 'ADMIN'">
+                                 <td>{{ user.username }}</td>
+                                 <td>Admin</td>
+                             </tr>
+                         </tbody>
+                     </table>
+                 </td>
+              </tr>
+           </tbody>
+        </table>
+     </md-table-container>
+</md-content>

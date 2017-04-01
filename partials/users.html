@@ -1,0 +1,86 @@
+<style>
+.permissionTable td {
+    padding: 0 1em 0 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 20em;
+    width: 20em;
+
+}
+.warning {
+    background: orange;
+}
+</style>
+<div ng-cloak>
+    <md-content class="md-padding">
+      <h1 class="md-display-2" style="margin: 0px">Users</h1>
+
+     <md-table-container>
+        <table md-table md-progress="dataLoading">
+           <thead md-head md-order="myOrder">
+              <tr md-row>
+                 <th md-column md-order-by="userId">ID</th>
+                 <th md-column md-order-by="username">User</th>
+                 <th md-column md-order-by="role">Role</th>
+                 <th md-column>Groups</th>
+                 <th md-column>Organism Permissions</th>
+              </tr>
+           </thead>
+           <tbody md-body>
+              <tr md-row ng-repeat="user in users | orderBy: myOrder">
+                 <td md-cell>{{user.userId}}</td>
+                 <td md-cell>
+                    <md-list-item class="md-2-line contact-item md-no-proxy ng-scope _md" >
+                        <img class="md-avatar" gravatar-src="user.username" alt="{{ user.firstName }} {{user.lastName}}" gravatar-size="50">
+                        <div class="md-list-item-text compact">
+                            <h3 class="ng-binding">{{ user.firstName }} {{ user.lastName }}</h3>
+                            <p class="ng-binding">{{ user.username }}</p>
+                        </div>
+                        <div class="md-secondary-container"></div>
+                    </md-list-item>
+                 <td md-cell>{{user.role}}</td>
+                 <td md-cell>
+                     <ul>
+                         <li ng-repeat="group in user.groups">
+                             {{ group.name }}
+                         </li>
+                     </ul>
+                 </td>
+                 <td md-cell>
+                     <table class="permissionTable">
+                         <thead>
+                             <tr>
+                                 <th>Permissions on</th>
+                                 <th>Organism</th>
+                                 <th>via</th>
+                             </tr>
+                         </thead>
+                         <tbody>
+                         </tbody>
+                         <tbody>
+                             <tr ng-if="user.isAdmin" class="warning">
+                                 <td>
+                                 ALL
+                                 </td>
+                                 <td>
+                                 ALL
+                                 </td>
+                                 <td>
+                                 Role
+                                 </td>
+                             </tr>
+                             <tr ng-repeat="p in user.mergedPerms">
+                                 <td>{{ p.perm }}</td>
+                                 <td>{{ p.org }}</td>
+                                 <td>{{ p.via }}</td>
+                             </tr>
+                         </tbody>
+                     </table>
+                 </td>
+              </tr>
+           </tbody>
+        </table>
+     </md-table-container>
+
+    </md-content>
+</div>

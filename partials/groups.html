@@ -1,0 +1,180 @@
+<style>
+.permissionTable td {
+    padding: 0 1em 0 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 20em;
+    width: 20em;
+
+}
+.warning {
+    background: orange;
+}
+</style>
+<md-content class="md-padding">
+<div layout="flex" flex="100">
+    <h1 class="md-display-2" style="margin: 0px">Groups</h1>
+    <span flex></span>
+    <span>
+        <md-button class="md-fab" aria-label="Add Group" ng-click="create_popup()">
+            <ng-md-icon icon="add"></ng-md-icon>
+        </md-button>
+    </span>
+</div>
+ <md-table-container>
+    <table md-table md-progress="dataLoadingGroup">
+       <thead md-head md-order="myOrder2">
+          <tr md-row>
+             <th md-column md-order-by="id">ID</th>
+             <th md-column md-order-by="name">Group</th>
+             <th md-column md-order-by="public">Public</th>
+             <th md-column>Users</th>
+             <th md-column>Organism Permissions</th>
+             <th md-column>Actions</th>
+          </tr>
+       </thead>
+       <tbody md-body>
+          <tr md-row ng-repeat="group in groups | orderBy: myOrder2">
+             <td md-cell>{{ group.id }}</td>
+             <td md-cell>{{ group.name }}</td>
+             <td md-cell>{{ group.public }}</td>
+             <td md-cell>
+                 <ul>
+                     <li ng-repeat="user in group.users">
+                         {{ user.email }}
+                     </li>
+                 </ul>
+             </td>
+             <td md-cell>
+                 <table class="permissionTable">
+                     <thead>
+                         <tr>
+                             <th>Permissions</th>
+                             <th>Organism</th>
+                         </tr>
+                     </thead>
+                     <tbody>
+                     <tr ng-repeat="p in group.organismPermissions" ng-if="p.id">
+                         <td>{{p.permissions | orderBy | joinBy: ', '}}</td>
+                         <td>{{p.organism}}</td>
+                     </tr>
+                     </tbody>
+                 </table>
+             </td>
+             <td>
+                <md-button ng-click="removeGroup(group)" aria-label="close" class="md-icon-button md-warn">
+                    <ng-md-icon icon="delete" "fill: white" ></ng-md-icon>
+                </md-button>
+                <md-button ng-click="editGroup(group)" aria-label="close" class="md-icon-button">
+                    <ng-md-icon icon="edit" "fill: white" ></ng-md-icon>
+                </md-button>
+             </td>
+          </tr>
+       </tbody>
+    </table>
+ </md-table-container>
+ </md-content>
+
+
+
+<div style="visibility: hidden" ng-cloak>
+  <div class="md-dialog-container" id="createGroup">
+    <md-dialog>
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    <span class="md-headline">{{ createForm.action }}</span>
+                    <span flex></span>
+                    <md-button ng-click="cancel()" aria-label="close" class="md-icon-button">
+                        <ng-md-icon icon="close" "fill: white" ></ng-md-icon>
+                    </md-button>
+                </div>
+            </md-toolbar>
+        <md-card style="margin:0">
+
+            <md-card-content layout="column">
+                <md-input-container>
+                    <label>Group Name</label>
+                    <input md-no-asterisk required name="group_name" ng-model="createForm.group_name" ng-disabled="createForm.group_id"/>
+                    <div ng-messages="group_name.$error">
+                        <div ng-message="required">This is required.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container>
+                    <div>
+                        <md-contact-chips
+                            ng-model="createForm.users"
+                            md-contacts="querySearch($query)"
+                            md-contact-name="_prefmt"
+                            md-contact-image="image"
+                            md-contact-email="username"
+                            md-require-match="true"
+                            md-highlight-flags="i"
+                            filter-selected="true"
+                            placeholder="Members">
+                        </md-contact-chips>
+                    </div>
+                </md-input-container>
+
+                <div>
+                    <md-autocomplete flex="100"
+                            md-selected-item="selectedItemOrg"
+                            md-search-text="searchTextOrg"
+                            md-items="item in querySearchOrg(searchTextOrg)"
+                            md-item-text="item.name"
+                            md-no-cache="true"
+                            md-selected-item-change="selectedItemChange(item)"
+                            >
+                        <span md-highlight-text="searchTextOrg">{{item.name}}</span>
+                    </md-autocomplete>
+                </div>
+                <div>
+                         <table style="width: 100%">
+                             <thead>
+                                 <tr>
+                                     <th></th>
+                                     <th colspan="4">Permissions</th>
+                                 </tr>
+                                 <tr>
+                                     <th>Organism</th>
+                                     <th>Admin</th>
+                                     <th>Write</th>
+                                     <th>Export</th>
+                                     <th>Read</th>
+                                     <th>Remove</th>
+                                 </tr>
+                             </thead>
+                             <tbody>
+                                 <tr ng-repeat="org in createForm.orgPerms">
+                                     <td>{{ org.organism }}</td>
+                                     <td>
+                                        <md-checkbox name="read" ng-model="org.p.ADMINISTRATE" aria-label="Admin Permission">
+                                        </md-checkbox>
+                                     </td>
+                                     <td>
+                                        <md-checkbox name="read" ng-model="org.p.WRITE" aria-label="Write Permission">
+                                        </md-checkbox>
+                                     </td>
+                                     <td>
+                                        <md-checkbox name="read" ng-model="org.p.EXPORT" aria-label="Export Permission">
+                                        </md-checkbox>
+                                     </td>
+                                     <td>
+                                        <md-checkbox name="read" ng-model="org.p.READ" aria-label="Read Permission">
+                                        </md-checkbox>
+                                     </td>
+                                     <td>
+                                        <md-button class="md-icon-button" ng-click="createFormRemoveActiveOrg(org)">
+                                            <ng-md-icon icon="delete"></ng-md-icon>
+                                        </md-button>
+                                     </td>
+                                 </tr>
+                             </tbody>
+                         </table>
+                </div>
+
+                <md-button class="md-raised md-primary" ng-click="createForm.func()">{{ createForm.cta }}</md-button>
+            </md-card-content>
+        </md-card>
+    </md-dialog>
+  </div>
+</div>
