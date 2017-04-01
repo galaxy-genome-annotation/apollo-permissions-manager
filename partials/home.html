@@ -1,0 +1,15 @@
+<div ng-cloak>
+    <md-content class="md-padding" ng-if="!nav.userData.apollo_url">
+    <h1 class="md-display-2">Apollo Permission Manager</h1>
+    Apollo's built in permission manager does not scale easily to
+    hundreds of genomes and users. We built this as a simple alternative
+    which is focused solely on permissions and auditing and might provide
+    a nice user experience for these.
+    </md-content>
+  <md-content ng-if="nav.userData.apollo_url">
+      Please see:
+      <a ng-href="#/users">Users</a>
+      <a ng-href="#/groups">Groups</a>
+      <a ng-href="#/organisms">Organisms</a>
+  </md-content>
+</div>
