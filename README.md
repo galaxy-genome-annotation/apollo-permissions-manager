@@ -24,6 +24,10 @@ RewriteRule ^(.*)$ $1 [R=200,L]
 </Location>
 ```
 
+## Deploying
+
+*Should* be as simple as `make deploy`
+
 ## LICENSE
 
 AGPLv3

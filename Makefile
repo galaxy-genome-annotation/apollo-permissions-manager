@@ -26,5 +26,14 @@ node_modules: package.json
 
 .PHONY: help
 
+deploy: ## Deploy to github.io
+	./node_modules/.bin/webpack;
+	rm -rf dist;
+	mkdir -p dist;
+	cp -Rv build dist/;
+	cp -Rv partials dist/;
+	cp index.html dist;
+	./node_modules/.bin/gh-pages -d dist
+
 help:
 	@egrep '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
