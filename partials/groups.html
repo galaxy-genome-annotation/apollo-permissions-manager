@@ -54,7 +54,7 @@
                          </tr>
                      </thead>
                      <tbody>
-                     <tr ng-repeat="p in group.organismPermissions" ng-if="p.id">
+                     <tr ng-repeat="p in group.organismPermissions | orderBy: 'organism'" ng-if="p.id">
                          <td>{{p.permissions | orderBy | joinBy: ', '}}</td>
                          <td>{{p.organism}}</td>
                      </tr>
