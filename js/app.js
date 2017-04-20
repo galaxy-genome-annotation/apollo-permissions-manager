@@ -60,6 +60,10 @@ apolloPermissions.config(["$routeProvider", "$httpProvider", "$mdThemingProvider
 				templateUrl: "partials/orgs.html",
 				controller: "OrgCtrl",
 			}).
+			when("/metrics", {
+				templateUrl: "partials/metrics.html",
+				controller: "MetricsCtrl",
+			}).
 			when("/", {
 				templateUrl: "partials/home.html",
 				controller: "HomeCtrl",
@@ -139,4 +143,5 @@ require("./ctrl/logout.js")(apolloPermissions);
 require("./ctrl/user.js")(apolloPermissions);
 require("./ctrl/group.js")(apolloPermissions);
 require("./ctrl/organism.js")(apolloPermissions);
+require("./ctrl/metrics.js")(apolloPermissions);
 // REQUIRE

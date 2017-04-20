@@ -1,0 +1,66 @@
+<style>
+.permissionTable td {
+    padding: 0 1em 0 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 20em;
+    width: 20em;
+
+}
+.warning {
+    background: orange;
+}
+</style>
+<div ng-cloak>
+    <md-content class="md-padding">
+      <h1 class="md-display-2" style="margin: 0px">Metrics</h1>
+
+      <h2 class="md-display-1" style="margin: 0px">Timers</h2>
+      <md-table-container>
+        <table md-table md-progress="promise">
+           <thead md-head md-order="myOrder">
+              <tr md-row>
+                  <th md-column colspan=2></th>
+                  <th md-column colspan=7 style="border-bottom: 1px solid black;">Counts</th>
+                  <th md-column colspan=4 style="border-bottom: 1px solid black;">Rate</th>
+              </tr>
+              <tr md-row>
+                 <th md-column>ID</th>
+                 <th md-column>Count</th>
+                 <th md-column>Max</th>
+                 <th md-column>Mean</th>
+                 <th md-column>Min</th>
+                 <th md-column>p50</th>
+                 <th md-column>p95</th>
+                 <th md-column>p99</th>
+                 <th md-column>Std Dev</th>
+
+                 <th md-column>m1</th>
+                 <th md-column>m5</th>
+                 <th md-column>m15</th>
+                 <th md-column>mean</th>
+              </tr>
+           </thead>
+           <tbody md-body>
+              <tr md-row ng-repeat="(key, value) in data.timers">
+                 <td md-cell>{{key}}</td>
+                 <td md-cell>{{value.count}}</td>
+                 <td md-cell>{{value.max | scifi}}</td>
+                 <td md-cell>{{value.mean | scifi}}</td>
+                 <td md-cell>{{value.min | scifi}}</td>
+                 <td md-cell>{{value.p50 | scifi}}</td>
+                 <td md-cell>{{value.p95 | scifi}}</td>
+                 <td md-cell>{{value.p99 | scifi}}</td>
+                 <td md-cell>{{value.stddev | scifi}}</td>
+
+                 <td md-cell>{{value.m1_rate | scifi}}</td>
+                 <td md-cell>{{value.m5_rate | scifi}}</td>
+                 <td md-cell>{{value.m15_rate | scifi}}</td>
+                 <td md-cell>{{value.mean_rate | scifi}}</td>
+              </tr>
+           </tbody>
+        </table>
+     </md-table-container>
+
+    </md-content>
+</div>
