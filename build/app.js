@@ -45,7 +45,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	module.exports = __webpack_require__(43);
+	module.exports = __webpack_require__(44);
 
 
 /***/ },
@@ -99,6 +99,9 @@
 		}).when("/organisms", {
 			templateUrl: "partials/orgs.html",
 			controller: "OrgCtrl"
+		}).when("/metrics", {
+			templateUrl: "partials/metrics.html",
+			controller: "MetricsCtrl"
 		}).when("/", {
 			templateUrl: "partials/home.html",
 			controller: "HomeCtrl"
@@ -177,6 +180,7 @@
 	__webpack_require__(40)(apolloPermissions);
 	__webpack_require__(41)(apolloPermissions);
 	__webpack_require__(42)(apolloPermissions);
+	__webpack_require__(43)(apolloPermissions);
 	// REQUIRE
 
 /***/ },
@@ -101993,6 +101997,19 @@
 	            return (input || []).join(delimiter || ',');
 	        };
 	    });
+
+	    apolloPermissions.filter('scifi', function () {
+	        // Filter to scientific notation
+	        var regex = /([0-9])\.?([0-9]{0,2}).*e(.*)/;
+	        return function (input) {
+	            var results = ("" + input.toExponential()).match(regex);
+	            var tmp = results[1] + '.' + results[2] + 'e' + results[3];
+	            if (tmp === "0.e+0") {
+	                return '0';
+	            }
+	            return tmp;
+	        };
+	    });
 	};
 
 	module.exports = exports['default'];
@@ -102694,6 +102711,34 @@
 
 /***/ },
 /* 43 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	exports["default"] = function (apolloPermissions) {
+		apolloPermissions.controller("MetricsCtrl", ["$scope", "$location", "$http", "$localStorage", "$mdLoginToast", function ($scope, $location, $http, $localStorage, $mdLoginToast) {
+			$scope.promise = $http({
+				'url': $localStorage.apolloCredentials.apollo_url + "/metrics/metrics",
+				'method': 'GET',
+				'headers': {
+					'Content-Type': 'application/json'
+				}
+			}).success(function (data) {
+				$scope.data = data;
+			}).error(function (err, error_code) {
+				$mdLoginToast.show('[' + error_code + '] ' + err);
+			});
+		}]);
+	};
+
+	module.exports = exports["default"];
+
+/***/ },
+/* 44 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
