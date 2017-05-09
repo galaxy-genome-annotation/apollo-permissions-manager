@@ -29,7 +29,8 @@ Lastly, our User permission view allows you to audit all user permissions, seein
 Requires NodeJS / NPM to be installed
 
 ```
-make run
+make build # Will compile into the build directory
+make       # Launch the server (Will reload on any JS changes.)
 ```
 
 ## CORS Headers
