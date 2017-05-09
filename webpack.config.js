@@ -5,7 +5,7 @@ module.exports = {
 	output: {
 		path: __dirname + "/build",
 		filename: "app.js",
-		publicPath: "/apollo-permissions-manager/",
+		publicPath: "/build",
 	},
 	module: {
 		loaders: [
