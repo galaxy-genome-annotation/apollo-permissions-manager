@@ -38,7 +38,18 @@
                         </div>
                         <div class="md-secondary-container"></div>
                     </md-list-item>
-                 <td md-cell>{{user.role}}</td>
+                 </td>
+                 <td md-cell>
+                    <md-select ng-model="user.role" ng-if="current_user != user.username" ng-change="changeUserRole(user)">
+                      <md-option><em>None</em></md-option>
+                      <md-option ng-repeat="role in roles" ng-value="role">
+                      {{role}}
+                      </md-option>
+                    </md-select>
+                    <span ng-if="current_user == user.username">
+                        {{ user.role }}
+                    </span>
+                 </td>
                  <td md-cell>
                      <ul>
                          <li ng-repeat="group in user.groups">
