@@ -14,6 +14,9 @@ export default function(apolloPermissions) {
                 }
             })
                 .success(function(data) {
+                    if(data.error == "Not authorized for any organisms"){
+                        data = [];
+                    }
                     $scope.organisms = data;
                 })
                 .error(function(err, error_code) {

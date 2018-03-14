@@ -55,7 +55,9 @@ export default function(apolloPermissions) {
                 $scope.dataLoadingOrg = makePost("/organism/findAllOrganisms", {
                 }).success(function(orgs){
                     $mdLoginToast.show('Orgs Loaded');
-					console.log(orgs);
+                    if(orgs.error == "Not authorized for any organisms"){
+                        orgs = [];
+                    }
                     $scope.orgs = orgs.map(function(o){
                         o.name = o.genus + " " + o.species + " " + o.commonName;
                         o._lowername = angular.lowercase(o.name);
