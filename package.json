@@ -54,5 +54,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "TAMU-CPT",
-  "license": "AGPL-3.0"
+  "license": "AGPL-3.0",
+  "dependencies": {
+    "gh-pages": "^1.1.0"
+  }
 }

@@ -48,9 +48,47 @@ RewriteRule ^(.*)$ $1 [R=200,L]
 </Location>
 ```
 
+Or for NGINX:
+
+```nginx
+location /apollo_api {
+    add_header Access-Control-Allow-Origin "*";
+    add_header Access-Control-Allow-Methods "POST, GET, OPTIONS, DELETE, PUT";
+    add_header Access-Control-Max-Age "1000";
+    add_header Access-Control-Allow-Headers "x-requested-with, Content-Type, origin, authorization, accept, client-security-token";
+
+    if ($request_method = OPTIONS ) {
+        add_header Content-Length 0;
+        add_header Content-Type text/plain;
+        # Yes the duplication is necessary
+        add_header Access-Control-Allow-Origin "*";
+        add_header Access-Control-Allow-Methods "POST, GET, OPTIONS, DELETE, PUT";
+        add_header Access-Control-Max-Age "1000";
+        add_header Access-Control-Allow-Headers "x-requested-with, Content-Type, origin, authorization, accept, client-security-token";
+        return 200;
+    }
+}
+```
+
 ## Deploying
 
-*Should* be as simple as `make deploy`
+See the `make deploy` target for how we're deploying to gh-pages.
+
+```
+# Build the client
+make build
+
+# Clean out any existing 'dist' folder
+rm -rf dist;
+mkdir -p dist;
+
+# Copy files over
+cp -Rv build dist/;
+cp -Rv partials dist/;
+cp index.html dist;
+
+# ready to deploy dist/ directory!
+```
 
 ## LICENSE
 
