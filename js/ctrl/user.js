@@ -1,6 +1,42 @@
 export default function(apolloPermissions) {
     apolloPermissions.controller("UserCtrl", ["$scope", "$location", "$http", "$localStorage", "$mdLoginToast",
         function($scope, $location, $http, $localStorage, $mdLoginToast) {
+            $scope.roles = ['ADMIN', 'USER'];
+            $scope.current_user = $localStorage.apolloCredentials.username;
+            $scope.changeUserRole = function(user){
+                $http({
+                    'url': $localStorage.apolloCredentials.apollo_url + "/user/updateUser",
+                    'method': 'POST',
+                    'headers': {
+                        'Content-Type': 'application/json',
+                    },
+                    'data': {
+                        "userId": user.userId,
+                        "firstName": user.firstName,
+                        "lastName": user.lastName,
+                        "email": user.email,
+                        "role": user.role,
+                        "groups": user.groups,
+                        "availableGroups": user.availableGroups,
+                        "newPassword":"",
+                        "organismPermissions": user.organismPermissions,
+                        // Auth
+                        'username': $localStorage.apolloCredentials.username,
+                        'password': $localStorage.apolloCredentials.password,
+                    }
+                })
+                    .success(function(data) {
+                        if(data.error){
+                            $mdLoginToast.show(data.error);
+                        } else {
+                            $mdLoginToast.show('Success');
+                        }
+                    })
+                    .error(function(err, error_code) {
+                        $mdLoginToast.show('[' + error_code + '] ' + err);
+                    });
+
+            }
             $scope.dataLoadingGroup = $http({
                 'url': $localStorage.apolloCredentials.apollo_url + "/group/loadGroups",
                 'method': 'POST',

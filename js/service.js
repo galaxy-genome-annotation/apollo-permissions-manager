@@ -17,4 +17,18 @@ export default function(apolloPermissions) {
 			};
 		}
 	]);
+
+	apolloPermissions.service("$mdNotifyToast", ['$mdToast',
+		function($mdToast) {
+			return {
+				show: function(content) {
+					return $mdToast.show(
+						$mdToast.simple()
+							.content(content)
+							.position("top right")
+					);
+				},
+			};
+		}
+	]);
 }

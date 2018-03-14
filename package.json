@@ -32,7 +32,7 @@
     "fakerest": "^1.1.4",
     "file-loader": "^0.8.5",
     "html-loader": "^0.3.0",
-    "jquery": "^2.2.3",
+    "jquery": "3.0.0",
     "jwt-decode": "^2.0.1",
     "lodash": "^4.14.1",
     "md5": "^2.0.0",
