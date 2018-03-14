@@ -5,6 +5,15 @@
     hundreds of genomes and users. We built this as a simple alternative
     which is focused solely on permissions and auditing and might provide
     a nice user experience for these.
+
+    <h2 class="md-display-2">Post-login</h2>
+    Just refresh the page. There's some weird bug with angular and it doesn't
+    show things properly just after login.
+
+    <h2 class="md-display-2">Nothing Works</h2>
+    If all of the views like users/groups/organisms seem to be broken, please see
+    <a href="https://github.com/erasche/apollo-permissions-manager#cors-headers">our
+    documentation</a> on how to configure your apollo server to support APM.
     </md-content>
   <md-content ng-if="nav.userData.apollo_url">
     <h1 class="md-display-2">Apollo Permission Manager</h1>
@@ -15,5 +24,10 @@
           <li><a ng-href="#/organisms">Organisms</a></li>
           <li><a ng-href="#/metrics">Metrics</a></li>
       </ul>
+
+    <h2 class="md-display-2">Nothing Works</h2>
+    If all of the views seem to be broken, please see
+    <a href="https://github.com/erasche/apollo-permissions-manager#cors-headers">our
+    documentation</a> on how to configure your apollo server to support APM.
   </md-content>
 </div>
